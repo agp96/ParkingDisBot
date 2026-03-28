@@ -118,13 +118,17 @@ async def handle_location(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     msg = await update.message.reply_text("🔍 Buscando plazas cercanas...")
 
-    elements = query_overpass(user_lat, user_lon)
+    elements = query_overpass(user_lat, user_lon, radius=800)
+
+    if not elements:
+        await msg.edit_text("🔍 Nada en 800 m, ampliando a 2 km...")
+        elements = query_overpass(user_lat, user_lon, radius=2000)
 
     if not elements:
         await msg.edit_text(
-            "😔 No encontré plazas de aparcamiento para discapacitados en un radio de 800 m.\n\n"
+            "😔 No encontré plazas de aparcamiento para discapacitados en un radio de 2 km.\n\n"
             "Puede que no estén mapeadas en OpenStreetMap. "
-            "Prueba a ampliar la búsqueda moviéndote un poco o consulta Google Maps."
+            "Puedes contribuir en openstreetmap.org"
         )
         return
 
