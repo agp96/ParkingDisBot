@@ -165,7 +165,9 @@ async def ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "📊 *Fuentes de datos:*\n"
         "• OpenStreetMap\n"
         "• Datos oficiales de ayuntamientos en datos.gob.es\n"
-        "/start — Inicio · /ayuda — Esta ayuda · /nuevaplaza — Registra una nueva plaza",
+        "/start — Inicio\n"
+        "/ayuda — Ayuda\n"
+        "/nuevaplaza — Registra una nueva plaza",
         parse_mode="Markdown"
     )
 
