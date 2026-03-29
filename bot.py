@@ -166,8 +166,8 @@ def format_result(plaza: dict, idx: int, lang: str) -> str:
     if plazas_n:
         lineas.append(TEXTS[lang]['parking_spaces'].format(plazas_n=plazas_n))
     
-    lineas.append(TEXTS[lang]['distance'].format(fuente=fuente))
-    
+    lineas.append(TEXTS[lang]['distance'].format(dist=dist, fuente=fuente))    
+
     return "\n".join(lineas)
 
 
