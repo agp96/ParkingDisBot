@@ -165,15 +165,35 @@ async def ayuda(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "📊 *Fuentes de datos:*\n"
         "• OpenStreetMap\n"
         "• Datos oficiales de ayuntamientos en datos.gob.es\n"
-        "/start — Inicio · /ayuda — Esta ayuda",
+        "/start — Inicio · /ayuda — Esta ayuda · /nuevaplaza — Envía a OpenStreetMap una nueva plaza",
         parse_mode="Markdown"
     )
+
+async def nueva_plaza(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "🗺️ *Añadir una plaza nueva*\n\n"
+        "Envíame tu 📍 *ubicación* cerca de la plaza y te daré el enlace para añadirla a OpenStreetMap.",
+        parse_mode="Markdown"
+    )
+    context.user_data['esperando_nueva_plaza'] = True
 
 
 async def handle_location(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_lat = update.message.location.latitude
     user_lon = update.message.location.longitude
 
+    if context.user_data.get('esperando_nueva_plaza'):
+        context.user_data['esperando_nueva_plaza'] = False
+        url = f"https://www.openstreetmap.org/edit?lat={user_lat}&lon={user_lon}#map=19/{user_lat}/{user_lon}"
+        await update.message.reply_text(
+            "✅ Aquí tienes el enlace para añadir la plaza en OpenStreetMap:\n\n"
+            f"[Abrir editor OSM]({url})\n\n"
+            "Añade un nodo con la etiqueta `amenity=parking_space` y `access=disabled`.",
+            parse_mode="Markdown",
+            disable_web_page_preview=True
+        )
+        return
+    
     msg = await update.message.reply_text("🔍 Buscando plazas cercanas...")
 
     plazas, radio = search_plazas(user_lat, user_lon)
@@ -222,6 +242,7 @@ def main():
     app = Application.builder().token(token).build()
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("ayuda", ayuda))
+    app.add_handler(CommandHandler("nuevaplaza", nueva_plaza))
     app.add_handler(MessageHandler(filters.LOCATION, handle_location))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
     logger.info("Bot iniciado...")
