@@ -37,6 +37,7 @@ TEXTS = {
         "help_3": "3️⃣ Navega a cada plaza con Google Maps",
         "new_parking": "📍 Envía la ubicación exacta de la plaza y la añadiremos.",
         "new_parking_added": "✅ Plaza enviada. ¡Gracias!",
+        'about': "♿ *ParkingDisBot*\n\nLocaliza plazas de aparcamiento reservadas para personas con discapacidad cerca de ti.\n\n📊 *Fuentes de datos:*\n• OpenStreetMap — cobertura global\n• Datos oficiales de ayuntamientos españoles\n\n",
     },
     "en": {
         "searching": "🔍 Searching for nearby spaces...",
@@ -52,6 +53,7 @@ TEXTS = {
         "help_3": "3️⃣ Navigate to each space with Google Maps",
         "new_parking": "📍 Send the exact location of the parking space and we'll add it.",
         "new_parking_added": "✅ Parking space submitted. Thank you!",
+        'about': "♿ *ParkingDisBot*\n\nFinds nearby disabled parking spaces in real time.\n\n📊 *Data sources:*\n• OpenStreetMap — global coverage\n• Official municipal datasets from Spain\n\n",
     },
 }
 
@@ -245,7 +247,10 @@ async def new_parking(update: Update, context: ContextTypes.DEFAULT_TYPE):
     lang = context.user_data.get("lang", "es")
     await update.message.reply_text(TEXTS[lang]["new_parking"], parse_mode="Markdown")
     context.user_data["esperando_nueva_plaza"] = True
-
+    
+async def about(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    lang = context.user_data.get("lang", "es")
+    await update.message.reply_text(TEXTS[lang]["about"], parse_mode="Markdown")
 
 async def handle_location(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_lat = update.message.location.latitude
@@ -370,6 +375,7 @@ def main():
     app.add_handler(CallbackQueryHandler(set_language, pattern="^lang_"))
     app.add_handler(CommandHandler("help", help))
     app.add_handler(CommandHandler("newparking", new_parking))
+    app.add_handler(CommandHandler("about", about))
     app.add_handler(MessageHandler(filters.LOCATION, handle_location))
     app.add_handler(CallbackQueryHandler(more_results, pattern="^more_results$"))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_text))
