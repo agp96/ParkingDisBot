@@ -179,7 +179,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         InlineKeyboardButton("🇬🇧 English", callback_data="lang_en"),
     ]]
     await update.message.reply_text(
-        "♿ *AccessibleParkBot*\n\n"
+        "♿ *ParkingDisBot*\n\n"
         "🇪🇸 Envíame tu 📍 ubicación para encontrar plazas PMR cercanas.\n"
         "🇬🇧 Send me your 📍 location to find nearby disabled parking spaces.\n\n"
         "🌍 Select language / Selecciona idioma:",
