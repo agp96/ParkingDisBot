@@ -37,7 +37,7 @@ TEXTS = {
         "help_3": "3️⃣ Navega a cada plaza con Google Maps",
         "new_parking": "📍 Envía la ubicación exacta de la plaza y la añadiremos.",
         "new_parking_added": "✅ Plaza enviada. ¡Gracias!",
-        'about': "♿ *ParkingDisBot*\n\nLocaliza plazas de aparcamiento reservadas para personas con discapacidad cerca de ti.\n\n📊 *Fuentes de datos:*\n• OpenStreetMap — cobertura global\n• Datos oficiales de ayuntamientos españoles\n\n",
+        'about': "♿ *DisParkingBot*\n\nLocaliza plazas de aparcamiento reservadas para personas con discapacidad cerca de ti.\n\n📊 *Fuentes de datos:*\n• OpenStreetMap — cobertura global\n• Datos oficiales de ayuntamientos españoles\n\n",
     },
     "en": {
         "searching": "🔍 Searching for nearby spaces...",
@@ -53,7 +53,7 @@ TEXTS = {
         "help_3": "3️⃣ Navigate to each space with Google Maps",
         "new_parking": "📍 Send the exact location of the parking space and we'll add it.",
         "new_parking_added": "✅ Parking space submitted. Thank you!",
-        'about': "♿ *ParkingDisBot*\n\nFinds nearby disabled parking spaces in real time.\n\n📊 *Data sources:*\n• OpenStreetMap — global coverage\n• Official municipal datasets from Spain\n\n",
+        'about': "♿ *DisParkingBot*\n\nFinds nearby disabled parking spaces in real time.\n\n📊 *Data sources:*\n• OpenStreetMap — global coverage\n• Official municipal datasets from Spain\n\n",
     },
 }
 
@@ -202,10 +202,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     lang = context.user_data["lang"]
     if lang == "es":
         keyboard = [[InlineKeyboardButton("🇬🇧 English", callback_data="lang_en")]]
-        texto = "♿ *ParkingDisBot*\n\nEnvía tu 📍 ubicación para encontrar plazas cercanas."
+        texto = "♿ *DisParkingBot*\n\nEnvía tu 📍 ubicación para encontrar plazas cercanas."
     else:
         keyboard = [[InlineKeyboardButton("🇪🇸 Español", callback_data="lang_es")]]
-        texto = "♿ *ParkingDisBot*\n\nSend your 📍 location to find nearby disabled parking spaces."
+        texto = "♿ *DisParkingBot*\n\nSend your 📍 location to find nearby disabled parking spaces."
 
     await update.message.reply_text(
         texto, parse_mode="Markdown", reply_markup=InlineKeyboardMarkup(keyboard)
